@@ -1,0 +1,108 @@
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background-color: var(--color-bg-secondary);
+    border-right: 1px solid var(--color-bg-secondary);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    transition: width 0.3s ease;
+    z-index: 10;
+}
+
+.newChatButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    /* Very subtle */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 99px;
+    /* Pill */
+    color: var(--color-text-primary);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.newChatButton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.sectionTitle {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+    padding-left: 0.5rem;
+}
+
+.historyList {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.historyItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    text-decoration: none;
+    background: transparent;
+    transition: background-color 0.2s, color 0.2s;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.historyItem:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+    color: var(--color-text-primary);
+}
+
+.historyItem.active {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--color-text-primary);
+    font-weight: 500;
+}
+
+.historyText {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profileSection {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text-primary);
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.8rem;
+}

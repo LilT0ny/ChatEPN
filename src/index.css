@@ -1,0 +1,70 @@
+:root {
+  --color-bg-primary: #0f1115; /* Deep deep charcoal/black */
+  --color-bg-secondary: #181a20; /* Slightly lighter for sidebar */
+  --color-border: #2a2d35;
+  --color-text-primary: #ecedee;
+  --color-text-secondary: #9b9ca1;
+  --color-accent: #3b82f6; /* Subtle blue for interactive elements */
+  
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-blur: 12px;
+
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Optima', 'Marcellus', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden; /* Prevent scrolling during chat */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+button {
+  font-family: var(--font-heading);
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+
+textarea, input {
+  font-family: var(--font-body);
+  background: transparent;
+  border: none;
+  color: inherit;
+  outline: none;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4d55;
+}
