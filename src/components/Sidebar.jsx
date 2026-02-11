@@ -2,15 +2,7 @@ import React from 'react';
 import styles from './Sidebar.module.css';
 import { PlusCircle, MessageSquare, Settings, User } from 'lucide-react';
 
-const Sidebar = ({ activeChatId, onSelectChat, onNewChat }) => {
-    // Temporary mock data for history
-    const history = [
-        { id: 1, title: 'Project BRAINSTORM', date: 'Today' },
-        { id: 2, title: 'Code Refactoring', date: 'Yesterday' },
-        { id: 3, title: 'Marketing Copy', date: 'Last Week' },
-        { id: 4, title: 'React Hooks Guide', date: 'Last Week' },
-    ];
-
+const Sidebar = ({ chats, activeChatId, onSelectChat, onNewChat }) => {
     return (
         <aside className={styles.sidebar}>
             <button className={styles.newChatButton} onClick={onNewChat} aria-label="New Chat">
@@ -21,16 +13,16 @@ const Sidebar = ({ activeChatId, onSelectChat, onNewChat }) => {
             <div className={styles.sectionTitle}>Recent</div>
 
             <div className={styles.historyList}>
-                {history.map((item) => (
+                {chats.map((chat) => (
                     <div
-                        key={item.id}
-                        className={`${styles.historyItem} ${activeChatId === item.id ? styles.active : ''}`}
-                        onClick={() => onSelectChat(item.id)}
+                        key={chat.id}
+                        className={`${styles.historyItem} ${activeChatId === chat.id ? styles.active : ''}`}
+                        onClick={() => onSelectChat(chat.id)}
                         role="button"
                         tabIndex={0}
                     >
                         <MessageSquare size={16} style={{ flexShrink: 0 }} />
-                        <span className={styles.historyText}>{item.title}</span>
+                        <span className={styles.historyText}>{chat.title}</span>
                     </div>
                 ))}
             </div>

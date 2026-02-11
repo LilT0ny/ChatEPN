@@ -74,6 +74,9 @@
     flex-shrink: 0;
     margin-top: 4px;
     /* Align with text top */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Input Area - Floating Pill */
@@ -85,6 +88,9 @@
     width: 90%;
     max-width: 800px;
     z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .inputBar {
@@ -94,7 +100,7 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 999px;
+    border-radius: 24px;
     /* Pill */
     padding: 0.75rem 1.25rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
@@ -123,6 +129,10 @@
     color: rgba(255, 255, 255, 0.3);
 }
 
+.textInput:focus {
+    outline: none;
+}
+
 .actionButton {
     display: flex;
     align-items: center;
@@ -133,6 +143,9 @@
     color: rgba(255, 255, 255, 0.3);
     margin-left: 0.25rem;
     transition: all 0.2s;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 .actionButton:hover {
@@ -153,4 +166,126 @@
     background: #ffffff;
 }
 
-/* Typing indicator could be added here */
+.sendButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Attachments */
+.attachmentsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.attachmentChip {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+}
+
+/* Pending Files (above input) */
+.pendingFiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 1rem;
+}
+
+.pendingFile {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(40, 42, 48, 0.8);
+    backdrop-filter: blur(8px);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Data Visualization Container */
+.dataContainer {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.chartControls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.chartBtn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-text-secondary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.chartBtn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-primary);
+}
+
+.activeChartBtn {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--color-text-primary);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Typing Indicator */
+.typingIndicator {
+    font-style: italic;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.5;
+    }
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-left-color: var(--color-bg-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
