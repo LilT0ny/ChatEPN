@@ -1,8 +1,8 @@
 .sidebar {
     width: 260px;
-    height: 100vh;
+    height: 100%;
     background-color: var(--color-bg-secondary);
-    border-right: 1px solid var(--color-bg-secondary);
+    border-right: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
     padding: 1.5rem;
@@ -17,9 +17,9 @@
     gap: 0.75rem;
     width: 100%;
     padding: 0.75rem 1rem;
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--glass-bg);
     /* Very subtle */
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
     border-radius: 99px;
     /* Pill */
     color: var(--color-text-primary);
@@ -29,7 +29,7 @@
 }
 
 .newChatButton:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--hover-bg);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -69,14 +69,15 @@
 }
 
 .historyItem:hover {
-    background-color: rgba(255, 255, 255, 0.04);
+    background-color: var(--hover-bg);
     color: var(--color-text-primary);
 }
 
 .historyItem.active {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--hover-bg);
     color: var(--color-text-primary);
     font-weight: 500;
+    border-left: 3px solid var(--color-accent);
 }
 
 .historyText {
@@ -88,7 +89,7 @@
 .profileSection {
     margin-top: auto;
     padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--color-border);
     display: flex;
     align-items: center;
     gap: 0.75rem;
