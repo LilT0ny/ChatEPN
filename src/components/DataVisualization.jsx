@@ -6,6 +6,7 @@ import {
     PolarGrid, PolarAngleAxis, PolarRadiusAxis, ComposedChart,
     Treemap
 } from 'recharts';
+import html2canvas from 'html2canvas';
 import styles from './DataVisualization.module.css';
 import { Download } from 'lucide-react';
 
@@ -46,49 +47,34 @@ const DataVisualization = ({ data, chartType, palette }) => {
         ? [palette.primary, palette.secondary, '#FFBB28', '#FF8042', '#AF19FF', '#FF4560']
         : CHART_COLORS;
 
-    // --- Download Chart as PNG ---
-    const handleDownload = useCallback(() => {
+    // --- Download Chart as PNG using html2canvas ---
+    const handleDownload = useCallback(async () => {
         const container = chartRef.current;
         if (!container) return;
 
-        // Target the Recharts SVG specifically, not lucide icon SVGs
-        const svg = container.querySelector('.recharts-wrapper svg');
-        if (!svg) {
-            // Fallback: if it's a table view, use the browser print
-            alert('No chart SVG found to download. If viewing a table, use Ctrl+P to print.');
-            return;
-        }
+        try {
+            // Hide the download button temporarily
+            const btn = container.querySelector('.' + styles.downloadBtn);
+            if (btn) btn.style.display = 'none';
 
-        // Clone the SVG to avoid modifying the original
-        const clonedSvg = svg.cloneNode(true);
-        const svgData = new XMLSerializer().serializeToString(clonedSvg);
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        const img = new Image();
+            const canvas = await html2canvas(container, {
+                backgroundColor: bgPrimary,
+                scale: 2, // Retina quality
+                useCORS: true,
+                logging: false,
+            });
 
-        // Set canvas size with 2x for retina quality
-        const rect = svg.getBoundingClientRect();
-        canvas.width = rect.width * 2;
-        canvas.height = rect.height * 2;
-        ctx.scale(2, 2);
-
-        img.onload = () => {
-            // Fill background
-            ctx.fillStyle = bgPrimary;
-            ctx.fillRect(0, 0, rect.width, rect.height);
-            ctx.drawImage(img, 0, 0, rect.width, rect.height);
+            // Restore button
+            if (btn) btn.style.display = '';
 
             const link = document.createElement('a');
             link.download = `chart-${chartType}-${Date.now()}.png`;
             link.href = canvas.toDataURL('image/png');
             link.click();
-        };
+        } catch (err) {
+            console.error('Failed to download chart:', err);
+        }
 
-        img.onerror = () => {
-            console.error('Failed to load SVG for export');
-        };
-
-        img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
         setShowContextMenu(false);
     }, [chartType, bgPrimary]);
 
