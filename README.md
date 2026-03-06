@@ -1,40 +1,82 @@
 # ChatEPN
 
-A modern, minimalist conversational AI interface built with React and Vite.
+A modern, minimalist conversational AI interface built with React and Vite, featuring data visualization and dark/light mode.
 
 ## Features
 
-- **Sophisticated Dark Mode**: Deep charcoal and slate palette.
-- **Glassmorphism**: Translucent message bubbles and UI elements.
-- **Typography**: Montserrat (headings) and Optima/Marcellus (body).
-- **Responsive Layout**: Sidebar for history, effortless chat area.
-- **Interactive**: Floating input pill with file attachment and voice input icons.
+- **Data Visualization**: Bar, Line, Pie, Area, Scatter, Radar, Combo and more
+- **Dark/Light Mode**: System-aware theme with persistence
+- **File Context**: Upload CSV, JSON, XLSX files as chat context
+- **Multi-chat**: Create and switch between multiple chat sessions
+- **Drag & Drop**: Drop files directly into the chat area
 
 ## Tech Stack
 
-- React 19
-- Vite
+- React 19, Vite 7
 - CSS Modules (Vanilla CSS)
-- Lucide React (Icons)
-- Google Fonts
+- Lucide React icons, Recharts, html2canvas
 
-## Getting Started
+## Getting Started (Local Dev)
 
-1.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
+```bash
+npm install
+npm run dev
+# → http://localhost:5173
+```
 
-2.  **Run the development server**:
-    ```bash
-    npm run dev
-    ```
+## Build for GitHub Pages
 
-3.  **Open in browser**:
-    Navigate to `http://localhost:5173`
+```bash
+npm run build          # outputs to /docs, base = /ChatEPN/
+```
 
-## Structure
+## 🐳 Docker
 
-- `src/components/Sidebar.jsx`: Chat history and user profile.
-- `src/components/ChatArea.jsx`: Main chat interface with floating input.
-- `src/index.css`: Global styles, variables, and typography.
+### Quick start
+
+```bash
+docker-compose up --build
+# → http://localhost:3000
+```
+
+### Manual build
+
+```bash
+# Build with base path set to / (Docker deployment)
+docker build --build-arg VITE_BASE=/ -t chatepn .
+
+# Run
+docker run -p 3000:80 chatepn
+# → http://localhost:3000
+```
+
+### Build for a custom sub-path
+
+```bash
+docker build --build-arg VITE_BASE=/my-app/ -t chatepn .
+```
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── Header/            # Global app header
+│   ├── ChatArea.jsx       # Main chat interface
+│   ├── Sidebar.jsx        # Chat history & profile
+│   ├── ConnectDataModal.jsx
+│   └── DataVisualization.jsx
+├── hooks/
+│   ├── useTheme.js        # Theme state & persistence
+│   └── useChat.js         # Chat state management
+├── constants/
+│   └── chartOptions.js    # Chart type definitions
+└── services/
+    └── mockService.js     # Query processing (mock)
+```
+
+## Environment Variables
+
+| Variable    | Default      | Description                          |
+|------------|--------------|--------------------------------------|
+| `VITE_BASE` | `/ChatEPN/`  | App base path (use `/` for Docker)   |

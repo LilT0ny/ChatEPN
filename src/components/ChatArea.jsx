@@ -1,21 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
-    Paperclip, Mic, ArrowUp, Send, Bot, Sparkles, BarChart2,
-    LineChart, PieChart, Database, MoreVertical, Layout, X,
-    BarChart3, BarChartHorizontal, AreaChart, ScatterChart,
-    Radar, Map, Table, Layers, Activity, BoxSelect, TrendingUp
+    Paperclip, Mic, ArrowUp, Sparkles, Database, X,
 } from 'lucide-react';
 import styles from './ChatArea.module.css';
 import DataVisualization from './DataVisualization.jsx';
-import ConnectDataModal from './ConnectDataModal.jsx';
 import { processQuery } from '../services/mockService.js';
+import { CHART_OPTIONS } from '../constants/chartOptions.js';
+
+const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
 
 const ChatArea = ({
     chat,
     onUpdateChat,
     showRightPanel,
     visualizationType,
-    onVisualizationChange
+    onVisualizationChange,
 }) => {
     const messages = chat?.messages || [];
     const [inputValue, setInputValue] = useState('');
@@ -23,62 +23,46 @@ const ChatArea = ({
     const messagesEndRef = useRef(null);
     const fileInputRef = useRef(null);
 
-    const chartOptions = [
-        { id: 'column', label: 'Column', icon: BarChart3 },
-        { id: 'bar', label: 'Bar', icon: BarChartHorizontal },
-        { id: 'line', label: 'Line', icon: LineChart },
-        { id: 'area', label: 'Area', icon: AreaChart },
-        { id: 'pie', label: 'Pie', icon: PieChart },
-        { id: 'scatter', label: 'Scatter', icon: ScatterChart },
-        { id: 'radar', label: 'Radar', icon: Radar },
-        { id: 'map', label: 'Map', icon: Map },
-        { id: 'table', label: 'Table', icon: Table },
-        { id: 'box', label: 'Box Plot', icon: BoxSelect },
-        { id: 'combo', label: 'Combo', icon: Layers },
-        { id: 'trend', label: 'Trend', icon: TrendingUp },
-        { id: 'activity', label: 'Activity', icon: Activity },
-    ];
-
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
-
+    // Scroll to bottom whenever messages change
     useEffect(() => {
-        scrollToBottom();
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
     const handleSend = async () => {
-        if (!inputValue.trim() && (!chat.files || chat.files.length === 0)) return;
+        const hasText = inputValue.trim().length > 0;
+        const hasFiles = chat.files?.length > 0;
+        if (!hasText && !hasFiles) return;
 
         const newUserMessage = {
             id: Date.now(),
             sender: 'user',
             text: inputValue,
-            attachments: chat.files ? [...chat.files] : []
+            attachments: chat.files ? [...chat.files] : [],
         };
 
-        // Clear files after sending (or keep them contextually? Usually clear from input area)
         const currentFiles = chat.files;
 
         onUpdateChat(prev => ({
             ...prev,
             messages: [...prev.messages, newUserMessage],
-            files: [] // Clear pending files
+            files: [],
         }));
 
         setInputValue('');
         setIsProcessing(true);
 
-        // Update title if it's the first message and title is "New Chat"
+        // Auto-title new chats from first user message
         if (messages.length <= 1 && chat.title === 'New Chat') {
-            onUpdateChat(prev => ({ ...prev, title: inputValue.slice(0, 30) || 'New Conversation' }));
+            onUpdateChat(prev => ({
+                ...prev,
+                title: inputValue.slice(0, 30) || 'New Conversation',
+            }));
         }
 
         try {
-            // Mock passing dataSource context if available
             const context = {
                 files: currentFiles,
-                dataSource: chat.dataSource ? { ...chat.dataSource, chartType: visualizationType } : null
+                dataSource: chat.dataSource ? { ...chat.dataSource, chartType: visualizationType } : null,
             };
 
             const response = await processQuery(inputValue, context);
@@ -86,16 +70,16 @@ const ChatArea = ({
             const newAiMessage = {
                 id: Date.now() + 1,
                 sender: 'ai',
-                ...response, // type, text, data, suggestedCharts
-                selectedChart: response.suggestedCharts ? response.suggestedCharts[0] : null
+                ...response,
+                selectedChart: response.suggestedCharts?.[0] ?? null,
             };
 
             onUpdateChat(prev => ({
                 ...prev,
-                messages: [...prev.messages, newAiMessage]
+                messages: [...prev.messages, newAiMessage],
             }));
         } catch (error) {
-            console.error(error);
+            console.error('Error processing query:', error);
         } finally {
             setIsProcessing(false);
         }
@@ -116,33 +100,31 @@ const ChatArea = ({
     const handleDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
-
-        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        if (e.dataTransfer.files?.length > 0) {
             processFiles(e.dataTransfer.files);
         }
     };
 
     const handleFileSelect = (e) => {
-        if (e.target.files && e.target.files.length > 0) {
+        if (e.target.files?.length > 0) {
             processFiles(e.target.files);
         }
     };
 
     const processFiles = (fileList) => {
-        const MAX_SIZE = 10 * 1024 * 1024; // 10MB
         const validFiles = [];
-        let errorMsg = '';
+        const errors = [];
 
         Array.from(fileList).forEach(file => {
-            if (file.size > MAX_SIZE) {
-                errorMsg = `File ${file.name} exceeds 10MB limit.`;
+            if (file.size > MAX_FILE_SIZE_BYTES) {
+                errors.push(`"${file.name}" exceeds the 10 MB limit.`);
             } else {
                 validFiles.push({ name: file.name, size: file.size });
             }
         });
 
-        if (errorMsg) {
-            alert(errorMsg); // Simple alert for now, could be a toast
+        if (errors.length > 0) {
+            alert(errors.join('\n'));
         }
 
         if (validFiles.length > 0) {
@@ -150,33 +132,7 @@ const ChatArea = ({
         }
     };
 
-    const updateChartType = (msgId, type) => {
-        onUpdateChat(prev => ({
-            ...prev,
-            messages: prev.messages.map(msg =>
-                msg.id === msgId ? { ...msg, selectedChart: type } : msg
-            )
-        }));
-    };
-
-    const handleDataConnect = (sourceSummary) => {
-        // Purge context means ensuring we start fresh or clear history
-        // Requirement: "Al cambiar de base de datos, el sistema debe purgar el contexto anterior"
-
-        const systemMessage = {
-            id: Date.now(),
-            sender: 'ai',
-            text: `Context switched to **${sourceSummary.type}: ${sourceSummary.name}**. \nPrevious context has been cleared. I am now ready to answer questions about this data source.`,
-            isSystem: true
-        };
-
-        onUpdateChat(prev => ({
-            ...prev,
-            dataSource: sourceSummary,
-            messages: [systemMessage], // Clear history, add system msg
-            files: []
-        }));
-    };
+    const isSendDisabled = !inputValue.trim() && !chat.files?.length;
 
     return (
         <main
@@ -184,9 +140,8 @@ const ChatArea = ({
             onDragOver={handleDragOver}
             onDrop={handleDrop}
         >
-            {/* Header Removed - Global Header handled in App.jsx */}
-
             <div className={styles.contentLayout}>
+                {/* Messages area */}
                 <div className={styles.mainContent}>
                     <div className={styles.messagesArea}>
                         {messages.map((msg) => (
@@ -195,16 +150,23 @@ const ChatArea = ({
                                 className={`${styles.messageRow} ${msg.sender === 'user' ? styles.messageUser : styles.messageAI}`}
                             >
                                 {msg.sender === 'ai' && (
-                                    <div className={styles.avatarAI} style={msg.isSystem ? { background: 'transparent' } : {}}>
-                                        {msg.isSystem ? <Database size={18} color="#10b981" /> : <Sparkles size={18} color="white" style={{ margin: 'auto' }} />}
+                                    <div
+                                        className={styles.avatarAI}
+                                        style={msg.isSystem ? { background: 'transparent' } : {}}
+                                    >
+                                        {msg.isSystem
+                                            ? <Database size={18} color="#10b981" />
+                                            : <Sparkles size={18} color="white" style={{ margin: 'auto' }} />
+                                        }
                                     </div>
                                 )}
+
                                 <div className={msg.sender === 'user' ? styles.bubbleUser : styles.bubbleAI}>
                                     {msg.text && msg.text.split('\n').map((line, i) => (
                                         <p key={i} style={{ marginBottom: line ? '0.5em' : '0' }}>{line}</p>
                                     ))}
 
-                                    {msg.attachments && msg.attachments.length > 0 && (
+                                    {msg.attachments?.length > 0 && (
                                         <div className={styles.attachmentsList}>
                                             {msg.attachments.map((file, idx) => (
                                                 <div key={idx} className={styles.attachmentChip}>
@@ -216,7 +178,6 @@ const ChatArea = ({
 
                                     {msg.type === 'data' && msg.data && (
                                         <div className={styles.dataContainer}>
-                                            {/* Removed local chart controls in favor of global selection or keep as override */}
                                             <DataVisualization
                                                 data={msg.data}
                                                 chartType={visualizationType}
@@ -242,8 +203,8 @@ const ChatArea = ({
                         <div ref={messagesEndRef} />
                     </div>
 
+                    {/* Input area */}
                     <div className={styles.inputWrapper}>
-                        {/* Visual indicator for attached files pending to send */}
                         {chat?.files?.length > 0 && (
                             <div className={styles.pendingFiles}>
                                 {chat.files.map((f, i) => (
@@ -280,7 +241,7 @@ const ChatArea = ({
                                 disabled={isProcessing}
                             />
 
-                            <button className={styles.actionButton} aria-label="Voice input">
+                            <button className={styles.actionButton} aria-label="Voice input" disabled>
                                 <Mic size={20} />
                             </button>
 
@@ -288,8 +249,8 @@ const ChatArea = ({
                                 className={`${styles.actionButton} ${styles.sendButton}`}
                                 onClick={handleSend}
                                 aria-label="Send message"
-                                disabled={!inputValue.trim() && (!chat.files || chat.files.length === 0)}
-                                style={{ opacity: (inputValue.trim() || chat.files?.length > 0) ? 1 : 0.5 }}
+                                disabled={isSendDisabled}
+                                style={{ opacity: isSendDisabled ? 0.5 : 1 }}
                             >
                                 {isProcessing ? <div className={styles.spinner} /> : <ArrowUp size={20} />}
                             </button>
@@ -297,18 +258,16 @@ const ChatArea = ({
                     </div>
                 </div>
 
+                {/* Visualization panel */}
                 {showRightPanel && (
                     <div className={styles.rightPanel}>
                         <div className={styles.rightPanelHeader}>
                             <h3>Visualization</h3>
-                            <button onClick={() => onVisualizationChange('bar')} className={styles.closePanelBtn} style={{ display: 'none' }}>
-                                <X size={16} />
-                            </button>
                         </div>
                         <div className={styles.rightPanelContent}>
                             <p className={styles.panelLabel}>Select Chart Type</p>
                             <div className={styles.chartGrid}>
-                                {chartOptions.map((option) => (
+                                {CHART_OPTIONS.map((option) => (
                                     <button
                                         key={option.id}
                                         className={`${styles.chartOption} ${visualizationType === option.id ? styles.selectedChartOption : ''}`}
@@ -324,9 +283,21 @@ const ChatArea = ({
                     </div>
                 )}
             </div>
-            {/* Modal removed - Handled in App.jsx */}
         </main>
     );
+};
+
+ChatArea.propTypes = {
+    chat: PropTypes.shape({
+        messages: PropTypes.array,
+        files: PropTypes.array,
+        title: PropTypes.string,
+        dataSource: PropTypes.object,
+    }),
+    onUpdateChat: PropTypes.func.isRequired,
+    showRightPanel: PropTypes.bool.isRequired,
+    visualizationType: PropTypes.string.isRequired,
+    onVisualizationChange: PropTypes.func.isRequired,
 };
 
 export default ChatArea;

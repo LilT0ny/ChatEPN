@@ -1,0 +1,12 @@
+services:
+  chatepn:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_BASE: /
+    image: chatepn:latest
+    container_name: chatepn
+    ports:
+      - "3000:80"
+    restart: unless-stopped

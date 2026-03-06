@@ -1,0 +1,25 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Build output
+dist/
+docs/
+
+# Git
+.git/
+.gitignore
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.*.local

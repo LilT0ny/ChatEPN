@@ -1,0 +1,89 @@
+.header {
+  height: 64px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  background-color: var(--color-bg-primary);
+  z-index: 50;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.chatInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.chatTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.dataSourceBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 0.1rem 0.5rem;
+  border-radius: 99px;
+  margin-top: 2px;
+}
+
+.iconButton {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.iconButton.active {
+  color: var(--color-text-primary);
+  background: var(--hover-bg);
+}
+
+.iconButton:hover {
+  background: var(--hover-bg);
+  color: var(--color-text-primary);
+}
+
+.connectButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.connectButton:hover {
+  background: var(--hover-bg);
+  color: var(--color-text-primary);
+}

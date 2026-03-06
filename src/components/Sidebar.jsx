@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Sidebar.module.css';
-import { PlusCircle, MessageSquare, Settings, User, Sun, Moon } from 'lucide-react';
+import { PlusCircle, MessageSquare, Sun, Moon } from 'lucide-react';
 
 const Sidebar = ({ chats, activeChatId, onSelectChat, onNewChat, theme, toggleTheme }) => {
     return (
@@ -20,8 +21,9 @@ const Sidebar = ({ chats, activeChatId, onSelectChat, onNewChat, theme, toggleTh
                         onClick={() => onSelectChat(chat.id)}
                         role="button"
                         tabIndex={0}
+                        onKeyDown={(e) => e.key === 'Enter' && onSelectChat(chat.id)}
                     >
-                        <MessageSquare size={16} style={{ flexShrink: 0 }} />
+                        <MessageSquare size={16} className={styles.historyIcon} />
                         <span className={styles.historyText}>{chat.title}</span>
                     </div>
                 ))}
@@ -29,22 +31,36 @@ const Sidebar = ({ chats, activeChatId, onSelectChat, onNewChat, theme, toggleTh
 
             <div className={styles.profileSection}>
                 <div className={styles.avatar}>U</div>
-                <div style={{ flex: 1, overflow: 'hidden' }}>
-                    <div style={{ fontSize: '0.9rem', fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>User Name</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>Free Plan</div>
+                <div className={styles.profileInfo}>
+                    <div className={styles.profileName}>User Name</div>
+                    <div className={styles.profilePlan}>Free Plan</div>
                 </div>
 
                 <button
                     onClick={toggleTheme}
                     className={styles.themeToggle}
                     title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-secondary)', padding: 0 }}
+                    aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
                 >
                     {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                 </button>
             </div>
         </aside>
     );
+};
+
+Sidebar.propTypes = {
+    chats: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            title: PropTypes.string.isRequired,
+        })
+    ).isRequired,
+    activeChatId: PropTypes.number.isRequired,
+    onSelectChat: PropTypes.func.isRequired,
+    onNewChat: PropTypes.func.isRequired,
+    theme: PropTypes.oneOf(['dark', 'light']).isRequired,
+    toggleTheme: PropTypes.func.isRequired,
 };
 
 export default Sidebar;
