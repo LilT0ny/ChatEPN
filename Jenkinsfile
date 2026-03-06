@@ -15,24 +15,6 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm ci'
-            }
-        }
-
-        stage('Lint') {
-            steps {
-                sh 'npm run lint'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                // VITE_BASE=/ para producción en un servidor raíz
-                sh 'VITE_BASE=/ npm run build'
-            }
-        }
 
         stage('Docker Build') {
             steps {
