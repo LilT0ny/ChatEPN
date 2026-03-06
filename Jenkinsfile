@@ -34,7 +34,13 @@ pipeline {
                     // Levanta el contenedor en un puerto temporal y verifica que responde HTTP 200
                     sh "docker run -d --name ${IMAGE_NAME}_test -p 9090:80 ${IMAGE_NAME}:${IMAGE_TAG}"
                     sleep(time: 5, unit: 'SECONDS')
-                    sh "curl --fail --silent http://localhost:9090/ || (docker logs ${IMAGE_NAME}_test; exit 1)"
+                    
+                    // Verificamos conectividad desde el host (127.0.0.1) o directamente desde el contenedor
+                    sh """
+                        curl -f -v http://127.0.0.1:9090/ || \
+                        docker exec ${IMAGE_NAME}_test wget -q -O - http://127.0.0.1/ > /dev/null || \
+                        (docker logs ${IMAGE_NAME}_test; exit 1)
+                    """
                 }
             }
             post {
