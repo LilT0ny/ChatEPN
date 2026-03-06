@@ -52,11 +52,8 @@ pipeline {
         }
 
         stage('Deploy') {
-            when {
-                branch 'main'
-            }
             steps {
-                echo '🚀 Deploying...'
+                echo "🚀 Deploying branch: ${env.BRANCH_NAME}..."
                 // Detiene el contenedor anterior (si existe) y lanza el nuevo
                 sh """
                     docker stop ${IMAGE_NAME} || true
