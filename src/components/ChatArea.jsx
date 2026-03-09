@@ -144,6 +144,20 @@ const ChatArea = ({
                 {/* Messages area */}
                 <div className={styles.mainContent}>
                     <div className={styles.messagesArea}>
+                        {messages.length === 0 && !isProcessing && (
+                            <div className={styles.welcomeScreen}>
+                                <img
+                                    src={`${import.meta.env.BASE_URL}Logo.png`}
+                                    alt="Llamingo"
+                                    className={styles.welcomeLogo}
+                                />
+                                <h1 className={styles.welcomeTitle}>Welcome to Llamingo</h1>
+                                <p className={styles.welcomeSubtitle}>
+                                    Your AI-powered data assistant. Ask anything about your data.
+                                </p>
+                            </div>
+                        )}
+
                         {messages.map((msg) => (
                             <div
                                 key={msg.id}
@@ -233,7 +247,7 @@ const ChatArea = ({
 
                             <textarea
                                 className={styles.textInput}
-                                placeholder="Message ChatEPN..."
+                                placeholder="Message Llamingo..."
                                 rows={1}
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}

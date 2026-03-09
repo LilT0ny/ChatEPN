@@ -23,6 +23,15 @@ const Header = ({
                     <MessageSquare size={18} />
                 </button>
 
+                <div className={styles.brand}>
+                    <img
+                        src={`${import.meta.env.BASE_URL}Logo.png`}
+                        alt="Llamingo Logo"
+                        className={styles.logo}
+                    />
+                    <span className={styles.brandName}>Llamingo</span>
+                </div>
+
                 <div className={styles.chatInfo}>
                     <h2 className={styles.chatTitle}>{activeChat?.title || 'ChatEPN'}</h2>
                     {activeChat?.dataSource && (
