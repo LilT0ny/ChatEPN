@@ -1,30 +1,31 @@
 :root {
-  /* Dark Theme (Default) - Linear/Acme Style */
+  /* Dark Theme (Default) - Llamingo Brand */
   --color-bg-primary: #141415;
-  /* Charcoal, not pure black */
   --color-bg-secondary: #1C1C1E;
-  /* Slightly lighter panel */
-  --color-border: #2E2E32;
-  /* Subtle border */
+  --color-border: #2E3A3B;
   --color-text-primary: #EDEDED;
-  /* High contrast text */
   --color-text-secondary: #A1A1AA;
-  /* Muted text */
-  --color-accent: #3B82F6;
-  /* Primary Blue */
+
+  /* Llamingo Brand Colors */
+  --llamingo-dark: #277D8A;
+  --llamingo-mid: #49ADAB;
+  --llamingo-light: #76C5BF;
+  --llamingo-orange: #F19349;
+
+  --color-accent: #277D8A;
 
   --glass-bg: rgba(20, 20, 21, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(118, 197, 191, 0.12);
   --glass-blur: 16px;
 
-  --bubble-user-bg: #3B82F6;
-  /* Accent color for user */
+  --bubble-user-bg: #277D8A;
   --bubble-user-text: #FFFFFF;
   --bubble-ai-bg: transparent;
 
   --input-bg: #1C1C1E;
-  --input-border: #2E2E32;
-  --hover-bg: rgba(255, 255, 255, 0.04);
+  --input-border: #2E3A3B;
+  --input-focus-ring: rgba(73, 173, 171, 0.4);
+  --hover-bg: rgba(73, 173, 171, 0.08);
 
   --font-heading: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -36,32 +37,35 @@
 
 [data-theme="light"] {
   --color-bg-primary: #FFFFFF;
-  --color-bg-secondary: #F9FAFB;
-  /* Gray 50 */
-  --color-border: #E5E7EB;
-  /* Gray 200 */
+  --color-bg-secondary: #F0FAFA;
+  --color-border: #C8E8E7;
   --color-text-primary: #111827;
-  /* Gray 900 */
-  --color-text-secondary: #6B7280;
-  /* Gray 500 */
-  --color-accent: #2563EB;
-  /* Blue 600 */
+  --color-text-secondary: #4B6B70;
+
+  /* Llamingo Brand Colors (same) */
+  --llamingo-dark: #277D8A;
+  --llamingo-mid: #49ADAB;
+  --llamingo-light: #76C5BF;
+  --llamingo-orange: #F19349;
+
+  --color-accent: #277D8A;
 
   --glass-bg: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-border: rgba(39, 125, 138, 0.12);
 
-  --bubble-user-bg: #2563EB;
+  --bubble-user-bg: #277D8A;
   --bubble-user-text: #FFFFFF;
-  --bubble-ai-bg: #F3F4F6;
-  /* Light gray for AI in light mode */
+  --bubble-ai-bg: #EEF9F8;
 
   --input-bg: #FFFFFF;
-  --input-border: #E5E7EB;
-  --hover-bg: rgba(0, 0, 0, 0.04);
+  --input-border: #C8E8E7;
+  --input-focus-ring: rgba(73, 173, 171, 0.3);
+  --hover-bg: rgba(73, 173, 171, 0.08);
 
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-sm: 0 1px 2px 0 rgba(39, 125, 138, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(39, 125, 138, 0.1), 0 2px 4px -1px rgba(39, 125, 138, 0.06);
 }
+
 
 * {
   box-sizing: border-box;

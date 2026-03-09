@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" fill="none">
+  <defs>
+    <linearGradient id="bodyGrad" x1="60" y1="60" x2="140" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2dd4bf"/>
+      <stop offset="60%" stop-color="#0d9488"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+    <linearGradient id="neckGrad" x1="90" y1="50" x2="110" y2="130" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f0fdfa"/>
+      <stop offset="100%" stop-color="#99f6e4"/>
+    </linearGradient>
+    <linearGradient id="headGrad" x1="95" y1="20" x2="130" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f0fdfa"/>
+      <stop offset="100%" stop-color="#2dd4bf"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Body -->
+  <path
+    d="M65 140 C55 130 50 115 52 100 C54 82 62 70 75 63 C85 57 95 58 100 60 L100 130 C100 145 90 158 78 162 C70 165 60 158 65 140 Z"
+    fill="url(#bodyGrad)"
+    stroke="#0f766e"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+
+  <!-- Body right flank -->
+  <path
+    d="M100 60 C110 58 124 62 132 74 C140 86 140 102 136 116 C132 128 122 138 112 142 C105 145 100 143 100 130 Z"
+    fill="#0d9488"
+    stroke="#0f766e"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+
+  <!-- Neck (light) -->
+  <path
+    d="M88 62 C84 55 82 43 84 34 C85 28 90 24 96 24 C102 24 106 28 108 34 C110 43 108 55 105 62 Z"
+    fill="url(#neckGrad)"
+    stroke="#0f766e"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+
+  <!-- Head -->
+  <path
+    d="M84 34 C82 26 86 16 96 14 C106 12 112 20 112 30 C112 38 108 46 104 50 C100 54 92 54 88 50 C85 47 85 40 84 34 Z"
+    fill="url(#headGrad)"
+    stroke="#0f766e"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+
+  <!-- Snout -->
+  <path
+    d="M104 42 C108 40 116 42 118 46 C120 50 116 56 110 56 C106 56 102 53 102 49 C102 46 103 43 104 42 Z"
+    fill="#f0fdfa"
+    stroke="#0f766e"
+    stroke-width="2.5"
+    stroke-linejoin="round"
+  />
+
+  <!-- Nostril -->
+  <circle cx="113" cy="49" r="2.2" fill="#0f766e"/>
+
+  <!-- Eye -->
+  <circle cx="98" cy="30" r="5" fill="white" stroke="#0f766e" stroke-width="2"/>
+  <circle cx="99" cy="30" r="2.5" fill="#0f766e"/>
+  <circle cx="100" cy="29" r="1" fill="white"/>
+
+  <!-- Ear (with orange inner) -->
+  <path
+    d="M89 16 C87 8 91 2 96 2 C100 2 102 7 100 14"
+    fill="#0d9488"
+    stroke="#0f766e"
+    stroke-width="2.5"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M91 15 C90 9 93 4 96 4 C99 4 100 9 99 14"
+    fill="#f97316"
+  />
+
+  <!-- Tail (small curl) -->
+  <path
+    d="M52 105 C44 100 40 90 44 83 C47 78 54 77 58 82"
+    fill="none"
+    stroke="#0d9488"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+
+  <!-- Front left leg -->
+  <path
+    d="M76 158 C74 168 73 178 74 188 C74 194 78 198 82 198 C86 198 88 194 87 188 C87 180 86 170 84 160"
+    fill="#0d9488"
+    stroke="#0f766e"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+  <!-- Front left hoof orange -->
+  <path
+    d="M74 188 C74 194 78 200 82 200 C86 200 88 195 87 188 Z"
+    fill="#f97316"
+    stroke="#c2510f"
+    stroke-width="1.5"
+  />
+
+  <!-- Front right leg -->
+  <path
+    d="M90 158 C90 168 90 178 91 188 C91 194 95 198 99 198 C103 198 105 194 104 188 C103 180 101 170 98 160"
+    fill="#0d9488"
+    stroke="#0f766e"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+  <!-- Front right hoof orange -->
+  <path
+    d="M91 188 C91 194 95 200 99 200 C103 200 105 195 104 188 Z"
+    fill="#f97316"
+    stroke="#c2510f"
+    stroke-width="1.5"
+  />
+
+  <!-- Back left leg -->
+  <path
+    d="M108 152 C108 162 109 174 110 184 C111 192 115 198 119 198 C123 198 124 192 123 184 C122 174 120 163 118 153"
+    fill="#0f766e"
+    stroke="#0f766e"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+  <!-- Back left hoof orange -->
+  <path
+    d="M110 184 C111 192 115 200 119 200 C123 200 124 193 123 184 Z"
+    fill="#f97316"
+    stroke="#c2510f"
+    stroke-width="1.5"
+  />
+
+  <!-- Back right leg -->
+  <path
+    d="M120 150 C121 160 122 172 123 182 C124 190 128 196 132 196 C136 196 137 190 136 182 C135 172 132 162 129 152"
+    fill="#0f766e"
+    stroke="#0f766e"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+  <!-- Back right hoof orange -->
+  <path
+    d="M123 182 C124 190 128 198 132 198 C136 198 137 191 136 182 Z"
+    fill="#f97316"
+    stroke="#c2510f"
+    stroke-width="1.5"
+  />
+</svg>

@@ -25,21 +25,19 @@ const Header = ({
 
                 <div className={styles.brand}>
                     <img
-                        src={`${import.meta.env.BASE_URL}Logo.png`}
+                        src={`${import.meta.env.BASE_URL}favicon.png`}
                         alt="Llamingo Logo"
                         className={styles.logo}
                     />
-                    <span className={styles.brandName}>Llamingo</span>
-                </div>
-
-                <div className={styles.chatInfo}>
-                    <h2 className={styles.chatTitle}>{activeChat?.title || 'ChatEPN'}</h2>
-                    {activeChat?.dataSource && (
-                        <div className={styles.dataSourceBadge}>
-                            <Database size={10} />
-                            <span>{activeChat.dataSource.name}</span>
-                        </div>
-                    )}
+                    <div className={styles.brandText}>
+                        <span className={styles.brandName}>Welcome to Llamingo</span>
+                        {activeChat?.dataSource && (
+                            <div className={styles.dataSourceBadge}>
+                                <Database size={10} />
+                                <span>{activeChat.dataSource.name}</span>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 

@@ -50,26 +50,21 @@
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 .brandName {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(120deg, #f97316, #ec4899);
+  background: linear-gradient(120deg, var(--llamingo-dark), var(--llamingo-orange));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-.chatInfo {
-  display: flex;
-  flex-direction: column;
-}
-
-.chatTitle {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin: 0;
+  white-space: nowrap;
 }
 
 .dataSourceBadge {
@@ -77,8 +72,8 @@
   align-items: center;
   gap: 0.4rem;
   font-size: 0.7rem;
-  color: #10b981;
-  background: rgba(16, 185, 129, 0.1);
+  color: var(--llamingo-mid);
+  background: rgba(73, 173, 171, 0.12);
   padding: 0.1rem 0.5rem;
   border-radius: 99px;
   margin-top: 2px;

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
     Paperclip, Mic, ArrowUp, Sparkles, Database, X,
@@ -17,7 +17,7 @@ const ChatArea = ({
     visualizationType,
     onVisualizationChange,
 }) => {
-    const messages = chat?.messages || [];
+    const messages = useMemo(() => chat?.messages || [], [chat?.messages]);
     const [inputValue, setInputValue] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
     const messagesEndRef = useRef(null);
@@ -147,7 +147,7 @@ const ChatArea = ({
                         {messages.length === 0 && !isProcessing && (
                             <div className={styles.welcomeScreen}>
                                 <img
-                                    src={`${import.meta.env.BASE_URL}Logo.png`}
+                                    src={`${import.meta.env.BASE_URL}llamingo.svg`}
                                     alt="Llamingo"
                                     className={styles.welcomeLogo}
                                 />
